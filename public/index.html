@@ -20,31 +20,30 @@
 		<!-- <link rel="import" href="bower_components/paper-fab/paper-fab.html"> -->
 		<!-- <link rel="import" href="bower_components/iron-icons/iron-icons.html"> -->
 		<!-- <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script> -->
-		
+
 	</head>
 	<body>
-	
+
 		<div class="container" style="width: 100%">
 			<!-- COVER IMAGE AND FLOATING BUTTON -->
-			<div class="cover-image"></div>	
+			<div class="cover-image"></div>
 			<div class="desktop-fab-container ">
 				<!-- REPLACE WITH YOUR APP URL -->
      			<a href="#">
      				<paper-fab class="wow fadeInUp desktop-fab" icon="shop"></paper-fab>
      			</a>
 			</div>
-			
+
 			<!-- ICON, NAME AND DESCRIPTION -->
 			<div class="wow fadeInUp content-card" style="padding:0px" >
 				<!-- REPLACE WITH YOUR APP URL -->
 				<img src="img/ad2.jpg" alt="" width="100%">
-				
 			</div>
-			
-			
-			
+
+
+
 			<!-- OTHER APPS BY YOU -->
-			<div class="wow fadeInUp content-works"> 
+			<div class="wow fadeInUp content-works">
 			    <div class="screenshot-item">
                     <a href="img/screenshots/ss1.png" data-featherlight="image">
                         <img src="img/screenshots/ss1.png">
@@ -88,8 +87,8 @@
                     </a>
                 </div>
      	    </div>
-		
-		
+
+
 		<!-- APP DETAILS -->
 		<div class="wow fadeInUp content-card" style="margin-top: 0;">
      		<span class="text-subtitle" style="font-size: 2em; font-weight: 300; color: #333">Details</span>
@@ -166,67 +165,66 @@
 					<label class="details-icon" >journey_time</label>
 					<span class="text-description" id="journey_time"></span>
 				</div>
-			</div>	
+			</div>
      	</div>
      		<div class="wow fadeInUp content-card" style="padding:0px" >
 				<!-- REPLACE WITH YOUR APP URL -->
 				<img src="img/ad1.jpg" alt="" width="100%">
-				
 			</div>
-		
-		<!-- SPACE BELOW DETAILS -->	
+
+		<!-- SPACE BELOW DETAILS -->
 		<div class="empty-space">
 			<div class="meta-container wow fadeInUp">
 				<div class="wow fadeInUp detail-item watermark credits">
 						<!-- <span class="text-description credits-text" style="color: #ffffff">Template by <a href="http://faizmalkani.com" style="color: #fff; font-weight: 700">Faiz Malkani</a></span> -->
 				</div>
-			</div>	
+			</div>
 		</div>
-			
-			
-			
-			
-			
+
+
+
+
+
 		<!-- ===================================================================================================== -->
-			
+
 		<!-- JAVASCRIPT -->
-		
+
 		<!-- Animations -->
 		<script src="js/wow.min.js"></script>
 		<script>
 			new WOW().init();
 		</script>
-		
+
 		<!-- Scrollwheel Smoothing -->
 		<script>
 			// $(function()
-			// {	
+			// {
 			// 	var $window = $(window);
 			// 	var scrollTime = 0.2;
 			// 	var scrollDistance = 270;
 			// 	$window.on("mousewheel DOMMouseScroll", function(event)
 			// 	{
-	
-			// 		event.preventDefault();	
+
+			// 		event.preventDefault();
 			// 		var delta = event.originalEvent.wheelDelta/120 || -event.originalEvent.detail/3;
 			// 		var scrollTop = $window.scrollTop();
 			// 		var finalScroll = scrollTop - parseInt(delta*scrollDistance);
-			// 		TweenMax.to($window, scrollTime, 
+			// 		TweenMax.to($window, scrollTime,
 			// 		{
-			// 			scrollTo : { y: finalScroll, autoKill:true }, ease: Power1.easeOut, overwrite: 5	 
-						
+			// 			scrollTo : { y: finalScroll, autoKill:true }, ease: Power1.easeOut, overwrite: 5
+
 			// 		});
 			// 	});
 			// });
 		</script>
 		<script type="text/javascript">
-		
+
 			$(function () {
 				var bitlyUrl=window.location.href ;
 				var pnr = bitlyUrl.split("=")[1];
                 console.log('pnr',pnr);
                 var url ='https://api.qykly.mobi/api2/pnrstatus/'+pnr;
-				
+
 				$.ajax({
                 type: "GET",
                 url: url,
@@ -252,31 +250,31 @@
 
                 	$('#board_from').text(data.board_from);
                 	$('#board_from').show();
-                	
+
                 	$('#board_to').text(data.board_to);
                 	$('#board_to').show();
-                	
+
                 	$('#class').text(data.class);
                 	$('#class').show();
-                	
+
                 	$('#travel_date').text(data.travel_date);
                 	$('#travel_date').show();
-                	
+
                 	$('#board_from_name').text(data.board_from_name);
                 	$('#board_from_name').show();
-                	
+
                 	$('#board_to_name').text(data.board_to_name);
                 	$('#board_to_name').show();
-                	
+
                 	$('#train_number').text(data.train_number);
                 	$('#train_number').show();
-                	
+
                 	$('#train_name').text(data.train_name);
                 	$('#train_name').show();
-                	
+
                 	$('#total_fare').text(data.total_fare);
                 	$('#total_fare').show();
-                	
+
                 	$('#coach_position').text(data.passenger[0].coach_position);
                 	$('#coach_position').show();
 
@@ -285,13 +283,13 @@
 
                 	$('#status').text(data.passenger[0].status);
                 	$('#status').show();
-                	
+
                 	$('#arrival_time').text(data.arrival_time);
                 	$('#arrival_time').show();
-                	
+
                 	$('#reached_time').text(data.reached_time);
                 	$('#reached_time').show();
-                	
+
                 	$('#journey_time').text(data.journey_time);
                 	$('#journey_time').show();
                  }
@@ -300,11 +298,11 @@
                  	$('#message').text(data.message);
                 	$('#pnrdata').hide();
                  }
-                   
+
                 }
              });
 			});
 		</script>
 
 	</body>
-</html>	
+</html>
