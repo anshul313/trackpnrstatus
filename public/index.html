@@ -37,7 +37,7 @@
 			<!-- ICON, NAME AND DESCRIPTION -->
 			<div class="wow fadeInUp content-card" style="padding:0px" >
 				<!-- REPLACE WITH YOUR APP URL -->
-				<img src="img/ad3.jpg" alt="" width="100%">
+				<img src="img/ad3.jpg" alt="" width="100%" height="35%">
 			</div>
 
 
@@ -91,7 +91,7 @@
 
 		<!-- APP DETAILS -->
 		<div class="wow fadeInUp content-card" style="margin-top: 0;">
-     		<span class="text-subtitle" style="font-size: 2em; font-weight: 300; color: #333">Details</span>
+     		<span class="text-subtitle" style="font-size: 2em; font-weight: 300; color: #333">Passenger Details</span>
 			<br><br>
 			<div id="message"></div>
 			<div id="pnrdata">
@@ -141,24 +141,24 @@
 					<span class="text-description" id="total_fare"></span>
 				</div>
 				<div class="detail-item" >
-					<label class="details-icon" >Coach position :</label>
-					<span class="text-description" id="coach_position"></span>
+					<label class="details-icon" >Passengers :</label>
+					<span class="text-description">
+						<table >
+						  <tr>
+						    <th>Booking</th>
+						    <th>Current Status</th>
+						  </tr>
+						  <tbody id=passenger_table>
+						  </tbody>
+						</table>
+					</span>
 				</div>
 				<div class="detail-item" >
-					<label class="details-icon" >Seat number :</label>
-					<span class="text-description" id="seat_number"></span>
-				</div>
-				<div class="detail-item" >
-					<label class="details-icon" >Status :</label>
-					<span class="text-description" id="status"></span>
-				</div>
-
-				<div class="detail-item" >
-					<label class="details-icon" >Arrival time :</label>
+					<label class="details-icon" >Boarding time :</label>
 					<span class="text-description" id="arrival_time"></span>
 				</div>
 				<div class="detail-item" >
-					<label class="details-icon" >Reached time :</label>
+					<label class="details-icon" >Destination time :</label>
 					<span class="text-description" id="reached_time"></span>
 				</div>
 				<div class="detail-item" >
@@ -222,7 +222,6 @@
 			$(function () {
 				var bitlyUrl=window.location.href ;
 				var pnr = bitlyUrl.split("=")[1];
-                console.log('pnr',pnr);
                 var url ='https://api.qykly.mobi/api2/pnrstatus/'+pnr;
 
 				$.ajax({
@@ -233,8 +232,9 @@
                 dataType: 'json',
                 success: function(response) {
                  	  var data=response.data;
+
                  if(data.status==='OK'){
-                 	  console.log(data);
+
                 	$('#pnr_number').text(data.pnr_number);
                 	$('#pnr_number').show();
 
@@ -244,6 +244,32 @@
                 		data.chart_prepared="NO";
 
                 	}
+                	// min to hour conversion
+
+					function minutesToStr(minutes) {
+					 var sign ='';
+					 if(minutes < 0){
+					  sign = '-';
+					 }
+
+					 var hours = leftPad(Math.floor(Math.abs(minutes) / 60));
+					 var minutes = leftPad(Math.abs(minutes) % 60);
+
+					 return sign + hours +'hrs '+minutes + 'min';
+
+					}
+
+					var hrs = minutesToStr(data.journey_time);
+
+					// alert(hrs);            
+
+					/*
+					 * add zero to numbers less than 10,Eg: 2 -> 02
+					 */
+					function leftPad(number) {  
+					    return ((number < 10 && number >= 0) ? '0' : '') + number;
+					}
+					//min to hour conversion
 
                 	$('#chart_prepared').text(data.chart_prepared);
                 	$('#chart_prepared').show();
@@ -275,22 +301,53 @@
                 	$('#total_fare').text(data.total_fare);
                 	$('#total_fare').show();
 
-                	$('#coach_position').text(data.passenger[0].coach_position);
-                	$('#coach_position').show();
+                	//passengers
 
-                	$('#seat_number').text(data.passenger[0].seat_number);
-                	$('#seat_number').show();
+                	var table_data=data.passenger;
+                	
+                	table_data.forEach(function (arguments,index) {
+                    $('#passenger_table').append(
+			                '<tr>'+'<td>' + arguments.seat_number +'</td>' +
+			                '<td>' + arguments.status + '</td>'  +'</tr>'
+			                
+			            );
+                	});
+                	
+                	//passengers
 
-                	$('#status').text(data.passenger[0].status);
-                	$('#status').show();
+                     //date formatting
+                     var monthNames = ["January", "February", "March", "April", "May", "June",
+					  "July", "August", "September", "October", "November", "December"
+					 ];
 
-                	$('#arrival_time').text(data.arrival_time);
+                     var date =new Date(data.arrival_time);
+                     var day=date.getUTCDate();
+                     var month=date.getUTCMonth();
+                     var year=date.getUTCFullYear();
+                     var hours=date.getUTCHours();
+                     var min=date.getUTCMinutes();
+
+                    var monthName=monthNames[month];
+                     var arrival_time=day+' '+monthName+', '+year+'  '+hours+':'+min;
+
+
+                     var date =new Date(data.reached_time);
+                     var day=date.getUTCDate();
+                     var month=date.getUTCMonth();
+                     var year=date.getUTCFullYear();
+                     var hours=date.getUTCHours();
+                     var min=date.getUTCMinutes();
+                    var monthName=monthNames[month];
+                    
+                     var reached_time=day+' '+monthName+', '+year+'  '+hours+':'+min;
+                     //date formatting
+                	$('#arrival_time').text(arrival_time);
                 	$('#arrival_time').show();
 
-                	$('#reached_time').text(data.reached_time);
+                	$('#reached_time').text(reached_time);
                 	$('#reached_time').show();
 
-                	$('#journey_time').text(data.journey_time);
+                	$('#journey_time').text(hrs);
                 	$('#journey_time').show();
                  }
                  else{
